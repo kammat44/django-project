@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block title %}
+    <title> Todo list Manager - Challenge Buddy</title>
+{% endblock title %}
+
+
+{% block content %} 
+    <div class="container">
+        
+        </br>
+        {% if messages%}
+            {% for message in messages %}
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{message}}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endfor %}
+        {% endif %}    
+        </br>
+
+        <form method="POST" class="row">
+            {% csrf_token %}
+            <div class="col-lg-4">
+            <label></label>
+            </div>
+            <div class="col-lg-6">
+            <input type="text" class="form-control" name="task" placeholder="New Task?">
+            </div>
+            <div class="col-lg-2">
+            <button type="submit" class="btn btn-primary">Add Task</button>
+            </div>
+
+        </form>
+        </br>
+
+        <table class="table table-bordered">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col">Task</th>
+                    <th scope="col">Done</th>
+                    <th scope="col">Edit</th>
+                    <th scope="col">Delete</th>
+                </tr>
+            </thead> 
+            <tbody>
+            {% if all_tasks %}    
+                {% for obj in all_tasks%}
+                {% if obj.done %}
+                <tr class="table-success">
+                    <th scope="row">{{ obj.task}}</th>
+                    <td>{{ obj.done}}</td>
+                    <td><a href="{% url 'edit_task' obj.id %}">Edit</a></td>
+                    <td><a href="{% url 'delete_task' obj.id %}">Delete</a></td>
+                </tr>
+                {%else%}
+                <tr class="table-light">
+                    <th scope="row">{{ obj.task}}</th>
+                    <td>{{ obj.done}}</td>
+                    <td><a href="{% url 'edit_task' obj.id %}">Edit</a></td>
+                    <td><a href="{% url 'delete_task' obj.id %}">Delete</a></td>
+                </tr>
+
+                {%endif%}
+                {% endfor %}
+            {% endif %}       
+            </tbody>
+        </table>    
+    </div>  
+{% endblock content %}    
