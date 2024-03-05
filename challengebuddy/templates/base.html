@@ -29,10 +29,24 @@
 
             </div>
           </div>
+          {% if user.is_authenticated %}
+            <p class="p-4 text-white bg-dark">username: {{ user.username }}</p>
+            <form action={% url 'logout'%} method="post">
+              {% csrf_token %}
+              <button class="btn btn-success" type="submit">Logout</button>
+            </form>
+          {% else %}
+            <a href={% url 'login' %} >
+              <button class="btn btn-success me-2" type="submit">Login</button>
+            </a>
+            <a href={% url 'register' %} >
+              <button class="btn btn-primary" type="submit">Register</button>
+            </a>
+          {% endif%}
         </div>
       </nav>
   </head>
-  <body class="bg-success">
+  <body class="bg-light">
     
     {% block content %}  
     {% endblock content %}
