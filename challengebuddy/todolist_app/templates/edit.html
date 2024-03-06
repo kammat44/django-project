@@ -8,21 +8,24 @@
     <div class="container">
     </br>
 
-    <form method="POST" class="row">
-        {% csrf_token %}
-        <div class="col-lg-2">
-        <label></label>
-        </div>
-        <div class="col-lg-6">
-            <input type="text" class="form-control" name="task" placeholder="{{ task_obj.task }}" value="{{ task_obj.task }}">
+    {% if task_obj.owner == request.user %}
+        <form method="POST" class="row">
+            {% csrf_token %}
+            <div class="col-lg-2">
+            <label></label>
             </div>
-        <div class="col-lg-2">
-        <input type="hidden" class="form-control" name="done" value="{{ task_obj.done }}">
-        </div>
-        <div class="col-lg-2">
-        <button type="submit" class="btn btn-primary">Update Task</button>
-        </div>
-
-    </form>
+            <div class="col-lg-6">
+                <input type="text" class="form-control" name="task" placeholder="{{ task_obj.task }}" value="{{ task_obj.task }}">
+                </div>
+            <div class="col-lg-2">
+            <input type="hidden" class="form-control" name="done" value="{{ task_obj.done }}">
+            </div>
+            <div class="col-lg-2">
+            <button type="submit" class="btn btn-primary">Update Task</button>
+            </div>
+        </form>
+    {% else %}
+        <p>Access restricted, you are not allowed!!</p>
+    {% endif %}
     </div>  
 {% endblock content %}   
